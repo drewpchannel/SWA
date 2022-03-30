@@ -1,5 +1,25 @@
 let nameReceived;
 
+function waitForLocal(key) {
+    return new Promise (resolve => {
+        chrome.storage.local.get(key, function(result) {
+            resolve(result.soundToggle);
+        });
+    });
+}
+
+function setLocalSound(key) {
+    waitForLocal(key).then(result => {
+        if (result) {
+            chromeSet('soundToggle', false);
+            document.getElementById('SoundSetting').innerText = 'Sound is OFF';
+        } else {
+            chromeSet('soundToggle', true);
+            document.getElementById('SoundSetting').innerText = 'Sound is ON';
+        }
+    })
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     var button = document.getElementById('Settings');
     button.addEventListener('click', function () {
@@ -15,29 +35,31 @@ document.addEventListener('DOMContentLoaded', function() {
             container.appendChild(okButton);
         }
     });
+    var soundButton = document.getElementById('SoundSetting');
+    soundButton.addEventListener('click', () => {
+        setLocalSound('soundToggle');
+    });
 });
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     sendResponse(chromeGet('name'));
-    if(message.sound == 'sound') {
+    if(message.command == 'soundOn' && chromeGet('soundToggle')) {
         playMario().play();
-    }
-    if (message.name == 'name') {
-        
     }
 });
 
 function chromeSet (key, value) {
     chrome.storage.local.set({[key]: value}, function() {
-        //console.log('Value is set to ' + value);
     });
 }
 
 function chromeGet (key) {
-    chrome.storage.local.get(key, function(result) {
-        nameReceived = result.name;
-    });
-    return nameReceived;
+    if (key == 'name') {
+        chrome.storage.local.get(key, function(result) {
+            nameReceived = result.name;
+        });
+        return nameReceived;
+    }
 }
 
 function playMario() {

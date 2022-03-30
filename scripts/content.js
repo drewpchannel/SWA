@@ -43,7 +43,6 @@ function notifyBrowser(title, desc, url) {
 }
 
 function checkForName() {
-    //console.log('check for name started...');
     if (document.getElementsByClassName('truncate color_classes__color-regular___ok4If Text__large___sIzY0 Text__block___2LnxD').length > 0) {
         let htmlNodeForName = document.getElementsByClassName('truncate color_classes__color-regular___ok4If Text__large___sIzY0 Text__block___2LnxD');
         Array.from(htmlNodeForName).forEach((i) => {
@@ -59,7 +58,6 @@ function checkForName() {
 }
 
 function checkForIncident() {
-    console.log('cfi runs')
     //possible fix to getting notifications with nothing actually in the que
     if (document.querySelectorAll('[id^=incident]').length > 1) {
         shouldNotify();
@@ -71,9 +69,8 @@ function checkForIncident() {
 }
 
 function shouldNotify() {
-    console.log(`checking shouldNotify, sc: ${stillCheck} scn: ${stillCheckName}`)
     if (stillCheck && stillCheckName) {
-        chrome.runtime.sendMessage('cliaehbjehgfgjodigeoimfdjkdopbko', {command: 'winNotification'});
+        chrome.runtime.sendMessage('cliaehbjehgfgjodigeoimfdjkdopbko', {command: 'soundOn'});
         stillCheck = false;
         notifyBrowser('hi', 'hi', 'hi');
     }
@@ -84,13 +81,10 @@ function getUserName(key, i) {
     chrome.runtime.sendMessage(editorExtensionId, {command: 'name'},
         (response) => {
             if (response != null && response != undefined && i) {
-                console.log(`inner: ${i.innerText} compared to response: ${responseName}`)
                 if (i.innerText == responseName) {
-                    console.log('name check hits true');
                     stillCheckName = false;
                     stillCheck = false;
                 } else if (stillCheckName) {
-                    console.log('name chk else')
                     stillCheck = true;
                     checkForIncident();
                 }
