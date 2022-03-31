@@ -11,9 +11,10 @@ To install:
   - click select folder
 
 To use:
-  - click the SWA extension
+  - click the SWA extension in chrome when you're loaded into service desk
   - right click open space on the popup and click inspect
   - minimize the inspected window and it is all set
+    > only needs inspect done to one window
 
 To setup:
   - Click settings and type in your name, this will stop pop ups from happening from tickets in your que

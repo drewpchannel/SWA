@@ -11,7 +11,7 @@
     },
     "content_scripts": [{
         "matches": ["*://*.ticketnetwork.com/*"],
-        "js":      ["scripts/content.js", "scripts/settings.js"],
+        "js":      ["scripts/content.js"],
         "run_at": "document_end"
     }],
     "permissions": [
