@@ -15,6 +15,7 @@ To use:
   - right click open space on the popup and click inspect
   - minimize the inspected window and it is all set
     > only needs inspect done to one window
+    > opening new tabs needs a new inspect window to be opened
 
 To setup:
   - Click settings and type in your name, this will stop pop ups from happening from tickets in your que
